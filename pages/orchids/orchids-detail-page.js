@@ -12,6 +12,7 @@ import {
     ProgressBarAndroid,
     NetInfo
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import File from 'react-native-fs';
 
 import routes from '../../routes';
@@ -34,7 +35,7 @@ export default class OrchidsDetailPage extends React.Component {
             <View style={styles.container}>
                 <View style={styles.toolbarContainer}>
                     <TouchableNativeFeedback
-                        onPress={this.goBack}
+                        onPress={Actions[this.props.back].bind(null, { direction: 'vertical' })}
                         background={TouchableNativeFeedback.SelectableBackground()}
                         >
                         <View style={styles.toolbarButton}>
@@ -54,7 +55,19 @@ export default class OrchidsDetailPage extends React.Component {
     }
 
     componentDidMount = () => {
-        const code = this.parseCode(this.props.code.data);
+        this.getOrchid(this.props.code);
+    }
+
+    componentWillReceiveProps = (props) => {
+        if (props.code == this.props.code) {
+            return;
+        }
+
+        this.getOrchid(props.code);
+    }
+
+    getOrchid = (code) => {
+        code = this.parseCode(code);
 
         this.setState({ isLoading: true });
 
@@ -212,8 +225,8 @@ export default class OrchidsDetailPage extends React.Component {
         return (
             <View>
                 <Text style={styles.secondaryTitle}>Descrição</Text>
-                {description.map((text) => {
-                    return <Text style={styles.paragraph}>{text}</Text>
+                {description.map((text, i) => {
+                    return <Text style={styles.paragraph} key={i}>{text}</Text>
                 })}
             </View>
         );
@@ -226,7 +239,7 @@ export default class OrchidsDetailPage extends React.Component {
             <View>
                 <Text style={styles.secondaryTitle}>Instruções</Text>
 
-                {instructions.map((item) => {
+                {instructions.map((item, i) => {
                     return (
                         <View key={item.title}>
                             <Text style={styles.subTitle}>{item.title}</Text>
@@ -245,6 +258,8 @@ export default class OrchidsDetailPage extends React.Component {
             const path = `${File.DocumentDirectoryPath}/${orchid.hash}.json`;
 
             orchid.saved = true;
+
+            console.log(orchid);
 
             File
                 .writeFile(path, JSON.stringify(orchid), 'utf8')

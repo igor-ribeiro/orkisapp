@@ -9,25 +9,23 @@ import {
     Image,
 } from 'react-native';
 import _ from 'lodash';
+import { Actions } from 'react-native-router-flux';
 
 import icons from '../../icons';
+import routes from '../../routes';
 
 export default (props) => {
-    // if (props.currentRoute.showNav == false) {
-    //     return <View></View>
-    // }
-
     return (
         <View style={styles.navigationContainer}>
-            {_.map(props.routes, (route, id) => {
+            {_.map(routes, (route, id) => {
                 return (
                     <TouchableNativeFeedback
                         key={route.title}
-                        onPress={props.changeTab.bind(null, route, id, props.navigator)}
                         background={TouchableNativeFeedback.SelectableBackground()}
+                        onPress={Actions[route.id]}
                         >
-                        <View style={[styles.navigationItem, route.title == props.currentRoute.title && styles.navigationItemActive]}>
-                            <Image 
+                        <View style={[styles.navigationItem, route.id == props.sceneKey && styles.navigationItemActive]}>
+                            <Image
                                 source={{ uri: icons[route.icon] }}
                                 style={{ width: 32, height: 32, }}
                             />

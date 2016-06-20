@@ -20,11 +20,4 @@ export default {
         onMenu: true,
         icon: 'favoriteFilled',
     },
-    'orchids-detail': {
-        id: 'orchidDetail',
-        title: 'Detalhes',
-        component: OrchidsDetailPage,
-        onMenu: false,
-        showNav: false,
-    }
 };

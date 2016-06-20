@@ -6,6 +6,7 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import BarcodeScanner from 'react-native-barcode-scanner-universal';
 import _ from 'lodash';
 
@@ -30,17 +31,11 @@ export default class CameraPage extends React.Component {
 
     readQRCode = (code) => {
         const props = {
-            code,
+            code: code.data,
+            back: 'camera',
         };
 
-        const route = Object.assign({}, routes['orchids-detail'], { props });
-        const currentRoutes = this.props.navigator.getCurrentRoutes();
-
-        if (_.find(currentRoutes, { id: route.id })) {
-            this.props.navigator.jumpTo(_.find(currentRoutes, { id: route.id }));
-        } else {
-            this.props.navigator.push(route);
-        }
+        Actions.details(props);
     }
 };
 

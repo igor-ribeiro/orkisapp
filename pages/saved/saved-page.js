@@ -8,6 +8,7 @@ import {
     TouchableNativeFeedback,
     ProgressBarAndroid
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import File from 'react-native-fs';
 import _ from 'lodash';
 
@@ -45,9 +46,9 @@ export default class SavedPage extends React.Component {
         this.getFiles();
     }
 
-    componentWillReceiveProps = (props) => {
-        this.getFiles();
-    }
+    // componentWillReceiveProps = () => {
+    //     this.getFiles();
+    // }
 
     getFiles = () => {
         let orchids = [];
@@ -104,7 +105,7 @@ export default class SavedPage extends React.Component {
             return (
                 <TouchableNativeFeedback
                     key={orchid.hash}
-                    onPress={this.orchidDetails.bind(this, orchid.code)}
+                    onPress={Actions.details.bind(null, { code: orchid.code, back: 'saved', saved: true })}
                     background={TouchableNativeFeedback.SelectableBackground()}
                     >
                     <View style={styles.orchidLink}>

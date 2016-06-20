@@ -1,0 +1,15 @@
+{
+  "name": "orkisapp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "lodash": "^4.12.0",
+    "react": "^15.0.2",
+    "react-native": "^0.27.2",
+    "react-native-barcode-scanner-universal": "^1.0.5",
+    "react-native-fs": "^1.5.1"
+  }
+}
